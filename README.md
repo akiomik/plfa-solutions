@@ -13,4 +13,4 @@ Solutions for [PLFA (Programming Language Foundations in Agda)](https://plfa.git
 - [Negation](https://github.com/akiomik/plfa-solutions/tree/master/part1/negation)
 - [Quantifiers](https://github.com/akiomik/plfa-solutions/tree/master/part1/quantifiers)
 - [Decidable](https://github.com/akiomik/plfa-solutions/tree/master/part1/decidable)
-- Lists
+- [Lists](https://github.com/akiomik/plfa-solutions/tree/master/part1/lists)
