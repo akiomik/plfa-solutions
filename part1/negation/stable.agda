@@ -1,22 +1,10 @@
 module stable where
 
-open import Relation.Nullary using (¬_)
 open import Data.Product using (_×_; _,_; proj₁; proj₂)
+open import negation using (¬_; ¬¬-intro; ¬¬¬-elim)
 
 Stable : Set → Set
 Stable A = ¬ ¬ A → A
-
-¬¬-intro : ∀ {A : Set}
-  → A
-    -----
-  → ¬ ¬ A
-¬¬-intro x = λ{¬x → ¬x x}
-
-¬¬¬-elim : ∀ {A : Set}
-  → ¬ ¬ ¬ A
-    -------
-  → ¬ A
-¬¬¬-elim ¬¬¬x = λ x → ¬¬¬x (¬¬-intro x)
 
 ¬-stable : ∀ {A : Set} → Stable (¬ A)
 ¬-stable = λ{ ¬¬¬a → λ{ a → ¬¬¬a (λ ¬a → ¬a a) }}

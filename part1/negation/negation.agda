@@ -36,30 +36,35 @@ infix 3 ¬_
   → ⊥
 ¬-elim ¬x x = ¬x x
 
+-- 二重否定の導入則
 ¬¬-intro : ∀ {A : Set}
   → A
     -----
   → ¬ ¬ A
 ¬¬-intro x  =  λ{¬x → ¬x x}
 
+-- 二重否定の導入則
 ¬¬-intro′ : ∀ {A : Set}
   → A
     -----
   → ¬ ¬ A
 ¬¬-intro′ x ¬x = ¬x x
 
+-- 三重否定の除去則
 ¬¬¬-elim : ∀ {A : Set}
   → ¬ ¬ ¬ A
     -------
   → ¬ A
 ¬¬¬-elim ¬¬¬x  =  λ x → ¬¬¬x (¬¬-intro x)
 
+-- 対偶 (contraposition)
 contraposition : ∀ {A B : Set}
   → (A → B)
     -----------
   → (¬ B → ¬ A)
 contraposition f ¬y x = ¬y (f x)
 
+-- 不等号(inequality)
 _≢_ : ∀ {A : Set} → A → A → Set
 x ≢ y  =  ¬ (x ≡ y)
 

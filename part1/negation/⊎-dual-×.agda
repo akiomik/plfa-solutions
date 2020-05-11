@@ -5,7 +5,7 @@ open import Data.Nat using (ℕ; zero; suc)
 open import Data.Sum using (_⊎_; inj₁; inj₂) renaming ([_,_] to case-⊎)
 open import Data.Product using (_×_; _,_)
 open import Function using (_∘_)
-open import Relation.Nullary using (¬_)
+open import negation using (¬_)
 
 postulate
   -- 外延性の公理
