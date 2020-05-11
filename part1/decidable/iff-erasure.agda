@@ -1,9 +1,9 @@
 module iff-erasure where
 
 open import Relation.Binary.PropositionalEquality using (_≡_; refl)
-open import Relation.Nullary using (¬_)
 open import Data.Empty using (⊥-elim)
 -- open import plfa.part1.Isomorphism using (_⇔_)
+open import decidable using (Dec; yes; no; Bool; true; false; ⌊_⌋)
 
 -- 同値 (equivalence)
 record _⇔_ (A B : Set) : Set where
@@ -11,21 +11,6 @@ record _⇔_ (A B : Set) : Set where
     to   : A → B
     from : B → A
 open _⇔_
-
--- decidable
-data Dec (A : Set) : Set where
-  yes :   A → Dec A
-  no  : ¬ A → Dec A
-
--- 真偽値 (boolean)
-data Bool : Set where
-  true  : Bool
-  false : Bool
-
--- erasure
-⌊_⌋ : ∀ {A : Set} → Dec A → Bool
-⌊ yes x ⌋ = true
-⌊ no ¬x ⌋ = false
 
 -- 必要十分条件 (if and only if)
 _iff_ : Bool → Bool → Bool

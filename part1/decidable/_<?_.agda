@@ -2,6 +2,7 @@ module _<?_ where
 
 open import Data.Nat using (ℕ; zero; suc)
 open import Relation.Nullary using (¬_)
+open import decidable using (Dec; yes; no)
 
 -- 厳密な不等式 (strict inequality)
 infix 4 _<_
@@ -14,11 +15,6 @@ data _<_ : ℕ → ℕ → Set where
     → m < n
       -------------
     → suc m < suc n
-
--- decidable
-data Dec (A : Set) : Set where
-  yes :   A → Dec A
-  no  : ¬ A → Dec A
 
 -- 0未満の自然数は存在しない
 ¬m<z : ∀ {m : ℕ} → ¬ (m < zero)

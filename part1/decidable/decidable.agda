@@ -112,6 +112,7 @@ T→≡ false ()
 
 -- The best of both worlds
 
+-- decidable
 data Dec (A : Set) : Set where
   yes :   A → Dec A
   no  : ¬ A → Dec A
@@ -166,47 +167,51 @@ fromWitness {A} {no ¬x} x = ¬x x
 
 -- Logical connectives (論理演算)
 
+-- 真偽値の論理積
 infixr 6 _∧_
-
 _∧_ : Bool → Bool → Bool
 true  ∧ true  = true
 false ∧ _     = false
 _     ∧ false = false
 
+-- decidableの論理積
 infixr 6 _×-dec_
-
 _×-dec_ : ∀ {A B : Set} → Dec A → Dec B → Dec (A × B)
 yes x ×-dec yes y = yes ⟨ x , y ⟩
 no ¬x ×-dec _     = no λ{ ⟨ x , y ⟩ → ¬x x }
 _     ×-dec no ¬y = no λ{ ⟨ x , y ⟩ → ¬y y }
 
+-- 真偽値の論理和
 infixr 5 _∨_
-
 _∨_ : Bool → Bool → Bool
 true  ∨ _     = true
 _     ∨ true  = true
 false ∨ false = false
 
+-- decidableの論理和
 infixr 5 _⊎-dec_
-
 _⊎-dec_ : ∀ {A B : Set} → Dec A → Dec B → Dec (A ⊎ B)
 yes x ⊎-dec _     = yes (inj₁ x)
 _     ⊎-dec yes y = yes (inj₂ y)
 no ¬x ⊎-dec no ¬y = no λ{ (inj₁ x) → ¬x x ; (inj₂ y) → ¬y y }
 
+-- 真偽値の否定
 not : Bool → Bool
 not true  = false
 not false = true
 
+-- decidableの否定
 ¬? : ∀ {A : Set} → Dec A → Dec (¬ A)
 ¬? (yes x) = no (¬¬-intro x)
 ¬? (no ¬x) = yes ¬x
 
+-- 真偽値の含意
 _⊃_ : Bool → Bool → Bool
 _     ⊃ true  = true
 false ⊃ _     = true
 true  ⊃ false = false
 
+-- decidableの含意
 _→-dec_ : ∀ {A B : Set} → Dec A → Dec B → Dec (A → B)
 _     →-dec yes y = yes (λ _ → y)
 no ¬x →-dec _     = yes (λ x → ⊥-elim (¬x x))

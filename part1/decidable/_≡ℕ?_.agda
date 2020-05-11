@@ -3,11 +3,7 @@ module _≡ℕ?_ where
 open import Relation.Binary.PropositionalEquality using (_≡_; refl)
 open import Data.Nat using (ℕ; zero; suc)
 open import Relation.Nullary using (¬_)
-
--- decidable
-data Dec (A : Set) : Set where
-  yes :   A → Dec A
-  no  : ¬ A → Dec A
+open import decidable using (Dec; yes; no)
 
 -- 0と等しい1以上の自然数は存在しない
 ¬z≡n : ∀ {n : ℕ} → ¬ (zero ≡ suc n)
