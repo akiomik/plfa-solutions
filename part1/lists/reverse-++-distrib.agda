@@ -66,9 +66,9 @@ reverse []       = []
 reverse (x ∷ xs) = reverse xs ++ [ x ]
 
 -- 結合したリストの逆順は、逆順にしたリストの逆順の結合と等しいことの証明
-reverse-distrib-++ : ∀ {A : Set} → (xs ys : List A)
+reverse-++-distrib : ∀ {A : Set} → (xs ys : List A)
   → reverse (xs ++ ys) ≡ reverse ys ++ reverse xs
-reverse-distrib-++ [] ys =
+reverse-++-distrib [] ys =
   begin
     reverse ([] ++ ys)
   ≡⟨⟩
@@ -78,12 +78,12 @@ reverse-distrib-++ [] ys =
   ≡⟨⟩
     reverse ys ++ reverse []
   ∎
-reverse-distrib-++ (x ∷ xs) ys =
+reverse-++-distrib (x ∷ xs) ys =
   begin
     reverse (x ∷ xs ++ ys)
   ≡⟨⟩
     reverse (xs ++ ys) ++ [ x ]
-  ≡⟨ cong (_++ [ x ]) (reverse-distrib-++ xs ys) ⟩
+  ≡⟨ cong (_++ [ x ]) (reverse-++-distrib xs ys) ⟩
     (reverse ys ++ reverse xs) ++ [ x ]
   ≡⟨ ++-assoc (reverse ys) (reverse xs) [ x ] ⟩
     reverse ys ++ (reverse xs ++ [ x ])
