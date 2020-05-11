@@ -14,9 +14,11 @@ data _≤_ : ℕ → ℕ → Set where
       -------------
     → suc m ≤ suc n
 
+-- 依存和型 (dependent sum type)
 data Σ (A : Set) (B : A → Set) : Set where
   ⟨_,_⟩ : (x : A) → B x → Σ A B
 
+-- 存在量化子 (existential quantifier)
 ∃ : ∀ {A : Set} (B : A → Set) → Set
 ∃ {A} B = Σ A B
 

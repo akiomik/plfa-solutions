@@ -27,6 +27,7 @@ postulate
 
 -- Universals
 
+-- 全称量化子の除去則
 ∀-elim : ∀ {A : Set} {B : A → Set}
   → (L : ∀ (x : A) → B x)
   → (M : A)
@@ -36,6 +37,7 @@ postulate
 
 -- Existentials
 
+-- 依存和型 (dependent sum type)
 data Σ (A : Set) (B : A → Set) : Set where
   ⟨_,_⟩ : (x : A) → B x → Σ A B
 
@@ -48,12 +50,14 @@ record Σ′ (A : Set) (B : A → Set) : Set where
     proj₁′ : A
     proj₂′ : B proj₁′
 
+-- 存在量化子 (existential quantifier)
 ∃ : ∀ {A : Set} (B : A → Set) → Set
 ∃ {A} B = Σ A B
 
 ∃-syntax = ∃
 syntax ∃-syntax (λ x → B) = ∃[ x ] B
 
+-- 存在量化子の除去則
 ∃-elim : ∀ {A : Set} {B : A → Set} {C : Set}
   → (∀ x → B x → C)
   → ∃[ x ] B x
@@ -111,6 +115,7 @@ odd-∃  (odd-suc e)  with even-∃ e
 
 -- Existentials, Universals, and Negation
 
+-- B(x)が成り立たないxが存在することと、任意のxについてB(x)が成り立たないことは同型
 ¬∃≃∀¬ : ∀ {A : Set} {B : A → Set}
   → (¬ ∃[ x ] B x) ≃ ∀ x → ¬ B x
 ¬∃≃∀¬ =

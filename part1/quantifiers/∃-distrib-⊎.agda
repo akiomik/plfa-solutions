@@ -14,10 +14,11 @@ record _≃_ (A B : Set) : Set where
     to∘from : ∀ (y : B) → to (from y) ≡ y
 open _≃_
 
+-- 依存和型 (dependent sum type)
 data Σ (A : Set) (B : A → Set) : Set where
   ⟨_,_⟩ : (x : A) → B x → Σ A B
 
--- 存在量化子
+-- 存在量化子 (existential quantifier)
 ∃ : ∀ {A : Set} (B : A → Set) → Set
 ∃ {A} B = Σ A B
 

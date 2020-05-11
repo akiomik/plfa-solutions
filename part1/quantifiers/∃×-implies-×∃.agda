@@ -1,7 +1,8 @@
 module ∃×-implies-×∃ where
 
-open import Data.Product using (_×_; proj₁; proj₂) renaming (_,_ to ⟨_,_⟩)
+open import Data.Product using (_×_) renaming (_,_ to ⟨_,_⟩)
 
+-- 依存和型 (dependent sum type)
 data Σ (A : Set) (B : A → Set) : Set where
   ⟨_,_⟩ : (x : A) → B x → Σ A B
 
