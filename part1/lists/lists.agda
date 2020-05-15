@@ -21,7 +21,7 @@ record _≃_ (A B : Set) : Set where
     from : B → A
     from∘to : ∀ (x : A) → from (to x) ≡ x
     to∘from : ∀ (y : B) → to (from y) ≡ y
-open _≃_
+-- open _≃_
 
 -- 同値 (equivalence)
 record _⇔_ (A B : Set) : Set where
@@ -455,3 +455,24 @@ not-in (there (here ()))
 not-in (there (there (here ())))
 not-in (there (there (there (here ()))))
 not-in (there (there (there (there ()))))
+
+-- All and append
+
+All-++-⇔ : ∀ {A : Set} {P : A → Set} (xs ys : List A) →
+  All P (xs ++ ys) ⇔ (All P xs × All P ys)
+All-++-⇔ xs ys =
+  record
+    { to       =  to xs ys
+    ; from     =  from xs ys
+    }
+  where
+    to : ∀ {A : Set} {P : A → Set} (xs ys : List A) →
+      All P (xs ++ ys) → (All P xs × All P ys)
+    to [] ys Pys = ⟨ [] , Pys ⟩
+    to (x ∷ xs) ys (Px ∷ Pxs++ys) with to xs ys Pxs++ys
+    ... | ⟨ Pxs , Pys ⟩ = ⟨ Px ∷ Pxs , Pys ⟩
+
+    from : ∀ { A : Set} {P : A → Set} (xs ys : List A) →
+      All P xs × All P ys → All P (xs ++ ys)
+    from [] ys ⟨ [] , Pys ⟩ = Pys
+    from (x ∷ xs) ys ⟨ Px ∷ Pxs , Pys ⟩ =  Px ∷ from xs ys ⟨ Pxs , Pys ⟩
