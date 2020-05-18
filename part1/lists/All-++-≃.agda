@@ -1,6 +1,8 @@
 module All-++-≃ where
 
-open import Relation.Binary.PropositionalEquality using (_≡_; refl)
+import Relation.Binary.PropositionalEquality as Eq
+open Eq using (_≡_; refl; cong)
+open Eq.≡-Reasoning
 open import Data.Product using (_×_) renaming (_,_ to ⟨_,_⟩)
 
 open import lists using (_≃_; List; []; _∷_; _++_; All)
@@ -18,23 +20,45 @@ All-++-≃ xs ys =
   where
     to : ∀ {A : Set} {P : A → Set} (xs ys : List A) →
       All P (xs ++ ys) → (All P xs × All P ys)
-    to [] ys Pys = ⟨ [] , Pys ⟩
+    to []       ys Pys                               = ⟨ [] , Pys ⟩
     to (x ∷ xs) ys (Px ∷ Pxs++ys) with to xs ys Pxs++ys
-    ... | ⟨ Pxs , Pys ⟩ = ⟨ Px ∷ Pxs , Pys ⟩
+    ...                              | ⟨ Pxs , Pys ⟩ = ⟨ Px ∷ Pxs , Pys ⟩
 
     from : ∀ {A : Set} {P : A → Set} (xs ys : List A) →
       All P xs × All P ys → All P (xs ++ ys)
-    from [] ys ⟨ [] , Pys ⟩ = Pys
-    from (x ∷ xs) ys ⟨ Px ∷ Pxs , Pys ⟩ =  Px ∷ from xs ys ⟨ Pxs , Pys ⟩
+    from []       ys ⟨ [] ,       Pys ⟩ = Pys
+    from (x ∷ xs) ys ⟨ Px ∷ Pxs , Pys ⟩ = Px ∷ from xs ys ⟨ Pxs , Pys ⟩
 
-    -- rewriteを使わない方法がわからない…
-    from∘to : ∀ {A : Set} {P : A → Set} → (xs ys : List A) → (Pxs++ys : All P (xs ++ ys))
+    from∘to : ∀ {A : Set} {P : A → Set} (xs ys : List A) → (Pxs++ys : All P (xs ++ ys))
       → (from xs ys (to xs ys Pxs++ys)) ≡ Pxs++ys
-    from∘to [] ys Pys = refl
-    from∘to (x ∷ xs) ys (Px ∷ Pxs++ys) rewrite from∘to xs ys Pxs++ys = refl
+    from∘to [] ys Pys =
+      begin
+        from [] ys (to [] ys Pys)
+      ≡⟨⟩
+        from [] ys  ⟨ [] , Pys ⟩
+      ≡⟨⟩
+        Pys
+      ∎
+    from∘to (x ∷ xs) ys (Px ∷ Pxs++ys) =
+      begin
+        from (x ∷ xs) ys (to (x ∷ xs) ys (Px ∷ Pxs++ys))
+      ≡⟨ cong (Px ∷_) (from∘to xs ys Pxs++ys) ⟩
+        Px ∷ Pxs++ys
+      ∎
 
-    -- こっちも…
-    to∘from : ∀ {A : Set} {P : A → Set} → (xs ys : List A) → (Pxs×Pys : All P xs × All P ys)
+    to∘from : ∀ {A : Set} {P : A → Set} (xs ys : List A) → (Pxs×Pys : All P xs × All P ys)
       → (to xs ys (from xs ys Pxs×Pys)) ≡ Pxs×Pys
-    to∘from [] ys ⟨ [] , Pys ⟩ = refl
-    to∘from (x ∷ xs) ys ⟨ Px ∷ Pxs , Pys ⟩ rewrite to∘from xs ys ⟨ Pxs , Pys ⟩ = refl
+    to∘from [] ys ⟨ [] , Pys ⟩ =
+      begin
+        to [] ys (from [] ys ⟨ [] , Pys ⟩)
+      ≡⟨⟩
+        to [] ys Pys
+      ≡⟨⟩
+        ⟨ [] , Pys ⟩
+      ∎
+    to∘from (x ∷ xs) ys ⟨ Px ∷ Pxs , Pys ⟩ =
+      begin
+        to (x ∷ xs) ys (from (x ∷ xs) ys ⟨ Px ∷ Pxs , Pys ⟩)
+      ≡⟨ cong (λ (⟨ Pxs , Pys ⟩) → ⟨ Px ∷ Pxs , Pys ⟩) (to∘from xs ys ⟨ Pxs , Pys ⟩) ⟩
+        ⟨ Px ∷ Pxs , Pys ⟩
+      ∎
