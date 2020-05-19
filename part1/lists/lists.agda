@@ -476,3 +476,18 @@ All-++-⇔ xs ys =
       All P xs × All P ys → All P (xs ++ ys)
     from [] ys ⟨ [] , Pys ⟩ = Pys
     from (x ∷ xs) ys ⟨ Px ∷ Pxs , Pys ⟩ =  Px ∷ from xs ys ⟨ Pxs , Pys ⟩
+
+-- Decidability of All
+
+all : ∀ {A : Set} → (A → Bool) → List A → Bool
+all p = foldr _∧_ true ∘ map p
+
+Decidable : ∀ {A : Set} → (A → Set) → Set
+Decidable {A} P = ∀ (x : A) → Dec (P x)
+
+All? : ∀ {A : Set} {P : A → Set} → Decidable P → Decidable (All P)
+All? P? []                                = yes []
+All? P? (x ∷ xs) with P? x   | All? P? xs
+...                 | yes Px | yes Pxs    = yes (Px ∷ Pxs)
+...                 | no ¬Px | _          = no λ{ (Px ∷ Pxs) → ¬Px Px   }
+...                 | _      | no ¬Pxs    = no λ{ (Px ∷ Pxs) → ¬Pxs Pxs }
