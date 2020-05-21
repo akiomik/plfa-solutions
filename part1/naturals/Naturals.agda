@@ -54,3 +54,22 @@ _ =
 
 _ : 2 + 3 ≡ 5
 _ = refl
+
+-- Multiplication
+
+_*_ : ℕ → ℕ → ℕ
+zero    * n  =  zero
+(suc m) * n  =  n + (m * n)
+
+_ =
+  begin
+    2 * 3
+  ≡⟨⟩    -- inductive case
+    3 + (1 * 3)
+  ≡⟨⟩    -- inductive case
+    3 + (3 + (0 * 3))
+  ≡⟨⟩    -- base case
+    3 + (3 + 0)
+  ≡⟨⟩    -- simplify
+    6
+  ∎
