@@ -102,3 +102,14 @@ _ =
   ≡⟨⟩
     0
   ∎
+
+-- Precedence
+
+infixl 6  _+_  _∸_
+infixl 7  _*_
+
+-- More pragmas
+
+{-# BUILTIN NATPLUS _+_ #-}
+{-# BUILTIN NATTIMES _*_ #-}
+{-# BUILTIN NATMINUS _∸_ #-}
