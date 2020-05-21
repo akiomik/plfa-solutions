@@ -73,3 +73,32 @@ _ =
   ≡⟨⟩    -- simplify
     6
   ∎
+
+-- Monus
+
+_∸_ : ℕ → ℕ → ℕ
+m     ∸ zero   =  m
+zero  ∸ suc n  =  zero
+suc m ∸ suc n  =  m ∸ n
+
+_ =
+  begin
+    3 ∸ 2
+  ≡⟨⟩
+    2 ∸ 1
+  ≡⟨⟩
+    1 ∸ 0
+  ≡⟨⟩
+    1
+  ∎
+
+_ =
+  begin
+    2 ∸ 3
+  ≡⟨⟩
+    1 ∸ 2
+  ≡⟨⟩
+    0 ∸ 1
+  ≡⟨⟩
+    0
+  ∎
