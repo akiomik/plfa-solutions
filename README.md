@@ -4,7 +4,7 @@ Solutions for [PLFA (Programming Language Foundations in Agda)](https://plfa.git
 
 ## Part 1
 
-- Naturals
+- [Naturals](https://github.com/akiomik/plfa-solutions/tree/master/part1/naturals)
 - Induction
 - Relations
 - Equality
