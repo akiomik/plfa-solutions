@@ -6,6 +6,5 @@ open import Naturals using (ℕ; zero; suc)
 seven : ℕ
 seven = suc (suc (suc (suc (suc (suc (suc zero))))))
 
-{-# BUILTIN NATURAL ℕ #-}
 _ : seven ≡ 7
 _ = refl
