@@ -1,4 +1,4 @@
-module part1.induction.Induction where
+module Induction′ where
 
 -- Imports
 
