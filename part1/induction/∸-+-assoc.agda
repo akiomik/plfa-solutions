@@ -3,9 +3,10 @@ module ∸-+-assoc where
 import Relation.Binary.PropositionalEquality as Eq
 open Eq using (_≡_; cong; sym)
 open Eq.≡-Reasoning using (begin_; _≡⟨⟩_; step-≡; _∎)
-open import Data.Nat using (ℕ; zero; suc; _+_; _*_; _∸_)
+open import Data.Nat using (ℕ; zero; suc; _+_; _∸_)
 
-open import Induction′ using (+-assoc; +-comm)
+open import Induction′ using (+-comm)
+open import 0∸n≡0 using (0∸n≡0)
 
 ∸-+-assoc : ∀ (m n p : ℕ) → m ∸ n ∸ p ≡ m ∸ (n + p)
 ∸-+-assoc m zero p =
@@ -26,15 +27,15 @@ open import Induction′ using (+-assoc; +-comm)
   ≡⟨ cong (m ∸_) (+-comm zero n) ⟩
     m ∸ (n + zero)
   ∎
-∸-+-assoc zero (suc n) (suc p) =
+∸-+-assoc zero n p =
   begin
-    zero ∸ (suc n) ∸ (suc p)
-  ≡⟨⟩
-    zero ∸ (suc p)
-  ≡⟨⟩
+    zero ∸ n ∸ p
+  ≡⟨ cong (_∸ p) (0∸n≡0 n) ⟩
+    zero ∸ p
+  ≡⟨ 0∸n≡0 p ⟩
     zero
-  ≡⟨⟩
-    zero ∸ ((suc n) + (suc p))
+  ≡⟨ sym (0∸n≡0 (n + p)) ⟩
+    zero ∸ (n + p)
   ∎
 ∸-+-assoc (suc m) (suc n) p =
   begin
