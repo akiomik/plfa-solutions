@@ -12,11 +12,9 @@ data Bin : Set where
 
 -- 2進数のインクリメント
 inc : Bin → Bin
-inc ⟨⟩      = ⟨⟩
-inc (b O)   = b I
-inc (⟨⟩ I)  = ⟨⟩ I O
-inc (b O I) = b I O
-inc (b I I) = inc (b I) O
+inc ⟨⟩    = ⟨⟩ I
+inc (b O) = b I
+inc (b I) = inc b O
 
 _ : inc (⟨⟩ I O I I) ≡ ⟨⟩ I I O O
 _ = refl
