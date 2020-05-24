@@ -6,7 +6,7 @@ Solutions for [PLFA (Programming Language Foundations in Agda)](https://plfa.git
 
 - [Naturals](https://github.com/akiomik/plfa-solutions/tree/master/part1/naturals)
 - [Induction](https://github.com/akiomik/plfa-solutions/tree/master/part1/induction)
-- Relations
+- [Relations](https://github.com/akiomik/plfa-solutions/tree/master/part1/relations)
 - Equality
 - Isomorphism
 - Connectives
