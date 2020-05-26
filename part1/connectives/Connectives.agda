@@ -248,3 +248,20 @@ infixr 1 _⊎_
 ⊎-count (inj₂ aa)    = 3
 ⊎-count (inj₂ bb)    = 4
 ⊎-count (inj₂ cc)    = 5
+
+-- False is empty
+
+data ⊥ : Set where
+  -- no clauses!
+
+⊥-elim : ∀ {A : Set}
+  → ⊥
+    --
+  → A
+⊥-elim ()
+
+uniq-⊥ : ∀ {C : Set} (h : ⊥ → C) (w : ⊥) → ⊥-elim w ≡ h w
+uniq-⊥ h ()
+
+⊥-count : ⊥ → ℕ
+⊥-count ()
