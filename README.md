@@ -8,7 +8,7 @@ Solutions for [PLFA (Programming Language Foundations in Agda)](https://plfa.git
 - [Induction](https://github.com/akiomik/plfa-solutions/tree/master/part1/induction)
 - [Relations](https://github.com/akiomik/plfa-solutions/tree/master/part1/relations)
 - [Equality](https://github.com/akiomik/plfa-solutions/tree/master/part1/equality)
-- Isomorphism
+- [Isomorphism](https://github.com/akiomik/plfa-solutions/tree/master/part1/isomorphism)
 - Connectives
 - [Negation](https://github.com/akiomik/plfa-solutions/tree/master/part1/negation)
 - [Quantifiers](https://github.com/akiomik/plfa-solutions/tree/master/part1/quantifiers)
