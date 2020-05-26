@@ -9,7 +9,7 @@ Solutions for [PLFA (Programming Language Foundations in Agda)](https://plfa.git
 - [Relations](https://github.com/akiomik/plfa-solutions/tree/master/part1/relations)
 - [Equality](https://github.com/akiomik/plfa-solutions/tree/master/part1/equality)
 - [Isomorphism](https://github.com/akiomik/plfa-solutions/tree/master/part1/isomorphism)
-- Connectives
+- [Connectives](https://github.com/akiomik/plfa-solutions/tree/master/part1/connectives)
 - [Negation](https://github.com/akiomik/plfa-solutions/tree/master/part1/negation)
 - [Quantifiers](https://github.com/akiomik/plfa-solutions/tree/master/part1/quantifiers)
 - [Decidable](https://github.com/akiomik/plfa-solutions/tree/master/part1/decidable)
