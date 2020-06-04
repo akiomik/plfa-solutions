@@ -1,5 +1,7 @@
 module Negation where
 
+-- Imports
+
 open import Relation.Binary.PropositionalEquality using (_≡_; refl)
 open import Data.Nat using (ℕ; zero; suc)
 open import Data.Empty using (⊥; ⊥-elim)
@@ -24,7 +26,8 @@ postulate
       -----------------------
     → f ≡ g
 
--- 否定 (negation)
+-- Negation (否定)
+
 infix 3 ¬_
 ¬_ : Set → Set
 ¬ A = A → ⊥
@@ -83,8 +86,11 @@ id′ ()
 id≡id′ : id ≡ id′
 id≡id′ = extensionality (λ())
 
+-- 同化
 assimilation : ∀ {A : Set} (¬x ¬x′ : ¬ A) → ¬x ≡ ¬x′
 assimilation ¬x ¬x′ = extensionality (λ x → ⊥-elim (¬x x))
+
+-- Excluded middle is irrefutable
 
 -- 排中律 (excluded middle)
 postulate
