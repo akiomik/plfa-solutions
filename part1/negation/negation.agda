@@ -1,4 +1,4 @@
-module negation where
+module Negation where
 
 open import Relation.Binary.PropositionalEquality using (_≡_; refl)
 open import Data.Nat using (ℕ; zero; suc)

@@ -1,7 +1,8 @@
 module irreflexive where
 
 open import Data.Nat using (ℕ; zero; suc)
-open import negation using (¬_)
+
+open import Negation using (¬_)
 
 infix 4 _<_
 data _<_ : ℕ → ℕ → Set where

@@ -1,7 +1,8 @@
 module stable where
 
 open import Data.Product using (_×_; _,_; proj₁; proj₂)
-open import negation using (¬_; ¬¬-intro; ¬¬¬-elim)
+
+open import Negation using (¬_; ¬¬-intro; ¬¬¬-elim)
 
 Stable : Set → Set
 Stable A = ¬ ¬ A → A

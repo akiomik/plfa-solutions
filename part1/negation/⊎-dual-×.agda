@@ -5,24 +5,8 @@ open import Data.Nat using (ℕ; zero; suc)
 open import Data.Sum using (_⊎_; inj₁; inj₂) renaming ([_,_] to case-⊎)
 open import Data.Product using (_×_; _,_)
 open import Function using (_∘_)
-open import negation using (¬_)
 
-postulate
-  -- 外延性の公理
-  extensionality : ∀ {A B : Set} {f g : A → B}
-    → (∀ (x : A) → f x ≡ g x)
-      -----------------------
-    → f ≡ g
-
--- 同型 (isomorphism)
-infix 0 _≃_
-record _≃_ (A B : Set) : Set where
-  field
-    to   : A → B
-    from : B → A
-    from∘to : ∀ (x : A) → from (to x) ≡ x
-    to∘from : ∀ (y : B) → to (from y) ≡ y
-open _≃_
+open import Negation using (_≃_; extensionality; ¬_)
 
 -- 選言削除 (proof by cases)
 -- case-⊎ : ∀ {A B C : Set}
