@@ -1,4 +1,6 @@
-module quantifiers where
+module Quantifiers where
+
+-- Imports
 
 import Relation.Binary.PropositionalEquality as Eq
 open Eq using (_≡_; refl)
@@ -31,7 +33,7 @@ postulate
 ∀-elim : ∀ {A : Set} {B : A → Set}
   → (L : ∀ (x : A) → B x)
   → (M : A)
-    -----------------
+    ---------------------
   → B M
 ∀-elim L M = L M
 
@@ -69,10 +71,10 @@ syntax ∃-syntax (λ x → B) = ∃[ x ] B
   → (∀ x → B x → C) ≃ (∃[ x ] B x → C)
 ∀∃-currying =
   record
-    { to      =  λ{ f → λ{ ⟨ x , y ⟩ → f x y }}
-    ; from    =  λ{ g → λ{ x → λ{ y → g ⟨ x , y ⟩ }}}
-    ; from∘to =  λ{ f → refl }
-    ; to∘from =  λ{ g → extensionality λ{ ⟨ x , y ⟩ → refl }}
+    { to      = λ{ f → λ{ ⟨ x , y ⟩ → f x y }}
+    ; from    = λ{ g → λ{ x → λ{ y → g ⟨ x , y ⟩ }}}
+    ; from∘to = λ{ f → refl }
+    ; to∘from = λ{ g → extensionality λ{ ⟨ x , y ⟩ → refl }}
     }
 
 -- An existential example
@@ -98,20 +100,20 @@ data odd where
 even-∃ : ∀ {n : ℕ} → even n → ∃[ m ] (    m * 2 ≡ n)
 odd-∃  : ∀ {n : ℕ} →  odd n → ∃[ m ] (1 + m * 2 ≡ n)
 
-even-∃ even-zero                       =  ⟨ zero , refl ⟩
+even-∃ even-zero                      = ⟨ zero , refl ⟩
 even-∃ (even-suc o) with odd-∃ o
-...                    | ⟨ m , refl ⟩  =  ⟨ suc m , refl ⟩
+...                    | ⟨ m , refl ⟩ = ⟨ suc m , refl ⟩
 
 odd-∃  (odd-suc e)  with even-∃ e
-...                    | ⟨ m , refl ⟩  =  ⟨ m , refl ⟩
+...                    | ⟨ m , refl ⟩ = ⟨ m , refl ⟩
 
 ∃-even : ∀ {n : ℕ} → ∃[ m ] (    m * 2 ≡ n) → even n
 ∃-odd  : ∀ {n : ℕ} → ∃[ m ] (1 + m * 2 ≡ n) →  odd n
 
-∃-even ⟨  zero , refl ⟩  =  even-zero
-∃-even ⟨ suc m , refl ⟩  =  even-suc (∃-odd ⟨ m , refl ⟩)
+∃-even ⟨  zero , refl ⟩ = even-zero
+∃-even ⟨ suc m , refl ⟩ = even-suc (∃-odd ⟨ m , refl ⟩)
 
-∃-odd  ⟨     m , refl ⟩  =  odd-suc (∃-even ⟨ m , refl ⟩)
+∃-odd  ⟨     m , refl ⟩ = odd-suc (∃-even ⟨ m , refl ⟩)
 
 -- Existentials, Universals, and Negation
 
@@ -120,8 +122,8 @@ odd-∃  (odd-suc e)  with even-∃ e
   → (¬ ∃[ x ] B x) ≃ ∀ x → ¬ B x
 ¬∃≃∀¬ =
   record
-    { to      =  λ{ ¬∃xy x y → ¬∃xy ⟨ x , y ⟩ }
-    ; from    =  λ{ ∀¬xy ⟨ x , y ⟩ → ∀¬xy x y }
-    ; from∘to =  λ{ ¬∃xy → extensionality λ{ ⟨ x , y ⟩ → refl } }
-    ; to∘from =  λ{ ∀¬xy → refl }
+    { to      = λ{ ¬∃xy x y → ¬∃xy ⟨ x , y ⟩ }
+    ; from    = λ{ ∀¬xy ⟨ x , y ⟩ → ∀¬xy x y }
+    ; from∘to = λ{ ¬∃xy → extensionality λ{ ⟨ x , y ⟩ → refl } }
+    ; to∘from = λ{ ∀¬xy → refl }
     }
