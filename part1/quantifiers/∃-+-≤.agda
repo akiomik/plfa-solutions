@@ -1,8 +1,10 @@
 module ∃-+-≤ where
 
 open import Relation.Binary.PropositionalEquality using (_≡_; refl; sym)
-open import Data.Nat using (ℕ; zero; suc; _+_; _*_)
+open import Data.Nat using (ℕ; zero; suc; _+_)
 open import Data.Nat.Properties using (+-suc)
+
+open import Quantifiers using (⟨_,_⟩; ∃-syntax)
 
 data _≤_ : ℕ → ℕ → Set where
   z≤n : ∀ {n : ℕ}
@@ -14,20 +16,12 @@ data _≤_ : ℕ → ℕ → Set where
       -------------
     → suc m ≤ suc n
 
--- 依存和型 (dependent sum type)
-data Σ (A : Set) (B : A → Set) : Set where
-  ⟨_,_⟩ : (x : A) → B x → Σ A B
-
--- 存在量化子 (existential quantifier)
-∃ : ∀ {A : Set} (B : A → Set) → Set
-∃ {A} B = Σ A B
-
-∃-syntax = ∃
-syntax ∃-syntax (λ x → B) = ∃[ x ] B
-
 -- 任意の自然数y, zについて、x + y = z を満たすある自然数xが存在するとき、y ≤ z
-∃-+-≤ : ∀ {y z : ℕ} → ∃[ x ] (x + y ≡ z) → y ≤ z
-∃-+-≤ {zero} (⟨ zero , refl ⟩) = z≤n
-∃-+-≤ {suc y} (⟨ zero , refl ⟩) = s≤s (∃-+-≤ {y} ⟨ zero , refl ⟩)
-∃-+-≤ {zero} (⟨ suc x , refl ⟩) = z≤n
+∃-+-≤ : ∀ {y z : ℕ}
+  → ∃[ x ] (x + y ≡ z)
+    ------------------
+  → y ≤ z
+∃-+-≤ {zero}  (⟨ zero , refl ⟩)  = z≤n
+∃-+-≤ {suc y} (⟨ zero , refl ⟩)  = s≤s (∃-+-≤ {y} ⟨ zero , refl ⟩)
+∃-+-≤ {zero}  (⟨ suc x , refl ⟩) = z≤n
 ∃-+-≤ {suc y} (⟨ suc x , refl ⟩) = s≤s (∃-+-≤ {y} ⟨ suc x , sym (+-suc x y) ⟩)
