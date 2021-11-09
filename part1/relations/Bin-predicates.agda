@@ -76,6 +76,47 @@ can-ℕ (suc n) = inc-can (can-ℕ n)
 -- ---------------
 -- to (from b) ≡ b
 
+left-shift : Bin → Bin
+left-shift ⟨⟩ = ⟨⟩
+left-shift (⟨⟩ O) = ⟨⟩ O
+left-shift (b O O) = b O O O
+left-shift (b I O) = b I O O
+left-shift (b I) = b I O
+
+-- left-shift-can : {b : Bin} → Can b → Can (left-shift b)
+-- left-shift-can ⟨⟩O = ⟨⟩O
+-- left-shift-can (can ob) = ?
+
+-- どのタイミングで2倍しても結果は等しい
+to∘2*∘from≡left-shift∘to∘from : ∀ (b : Bin) → to (2 * (from b)) ≡ left-shift (to (from b))
+to∘2*∘from≡left-shift∘to∘from ⟨⟩ =
+  begin
+    to (2 * (from ⟨⟩))
+  ≡⟨⟩
+    to (2 * 0)
+  ≡⟨⟩
+    to zero
+  ≡⟨⟩
+    ⟨⟩ O
+  ≡⟨⟩
+    left-shift (⟨⟩ O)
+  ≡⟨⟩
+    left-shift (to zero)
+  ≡⟨⟩
+    left-shift (to (from ⟨⟩))
+  ∎
+to∘2*∘from≡left-shift∘to∘from (b O) =
+  begin
+    to (2 * (from (b O)))
+  ≡⟨⟩
+    to (2 * (2 * (from b)))
+  
+  ≡⟨ {!!} ⟩
+    left-shift (to (from (b O)))
+  ∎
+to∘2*∘from≡left-shift∘to∘from (b I) = {!!}
+
+-- どのタイミングでインクリメントしても結果は等しい
 to∘from∘inc≡inc∘to∘from : ∀ (b : Bin) → to (from (inc b)) ≡ inc (to (from b))
 to∘from∘inc≡inc∘to∘from ⟨⟩ =
   begin
@@ -159,7 +200,18 @@ to∘from (can ⟨⟩I) =
   ≡⟨⟩
     ⟨⟩ I
   ∎
-to∘from {b O} (can (ob O)) = {!!} -- TODO
+to∘from {b O} (can (ob O)) =
+  begin
+    to (from (b O))
+  ≡⟨⟩
+    to (2 * (from b))
+  ≡⟨ to∘2*∘from≡left-shift∘to∘from {!!} ⟩
+    left-shift (to (from b))
+  ≡⟨ cong left-shift (to∘from (can ob)) ⟩
+    left-shift b
+  ≡⟨ {!!} ⟩
+    b O
+  ∎
 to∘from {b I} (can (ob I)) =
   begin
     to (from (b I))
